@@ -1,0 +1,4580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Private Chatting — Your Conversations. Your Space.</title>
+  <meta
+    name="description"
+    content="Global Private Chatting is a modern Android messaging application by Sumama Shaikh featuring Home chats, Status updates, Contacts, and Personal Profiles in a clean interface."
+  />
+  <meta name="author" content="Sumama Shaikh" />
+  <meta name="theme-color" content="#087F5B" />
+
+  <!-- Open Graph Metadata -->
+  <meta property="og:title" content="Global Private Chatting — Modern Android Messaging" />
+  <meta
+    property="og:description"
+    content="Your Conversations. Your Space. Home chats, Status updates, Contacts, and Profiles in a calm Android messaging app."
+  />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts: Manrope & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ==========================================================================
+       Global Private Chatting — Premium Animated Single-File Stylesheet
+       Light Theme Palette:
+       Warm White (#FAFCFA), Light Mint (#F0F8F3), Deep Emerald (#087F5B),
+       Fresh Green (#24B47E), Charcoal (#18251F), Muted Grey (#748078)
+       ========================================================================== */
+
+    :root {
+      --bg-primary: #FAFCFA;
+      --bg-secondary: #F0F8F3;
+      --surface: #FFFFFF;
+      --primary: #087F5B;
+      --primary-hover: #066649;
+      --accent: #24B47E;
+      --accent-soft: #E3F5EC;
+      --text-main: #18251F;
+      --text-muted: #748078;
+      --border-subtle: #DCE7E0;
+      --border-strong: #C2D6CA;
+
+      --font-heading: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 999px;
+
+      --shadow-xs: 0 2px 8px rgba(24, 37, 31, 0.04);
+      --shadow-sm: 0 6px 18px rgba(24, 37, 31, 0.05);
+      --shadow-md: 0 16px 40px rgba(24, 37, 31, 0.08);
+      --shadow-lg: 0 24px 56px rgba(16, 36, 27, 0.14);
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --transition-base: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-reveal: 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      max-width: 100%;
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 0.92rem + 0.16vw, 1.02rem);
+      line-height: 1.65;
+      color: var(--text-main);
+      background-color: var(--bg-primary);
+      max-width: 100%;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img,
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    ul,
+    ol {
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: var(--font-heading);
+      color: var(--text-main);
+      letter-spacing: -0.025em;
+      line-height: 1.18;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* Top Reading Progress Bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      z-index: 1200;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    .scroll-progress__bar {
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent);
+      transition: width 0.08s linear;
+    }
+
+    /* Subtle Page Entrance Veil */
+    .page-veil {
+      position: fixed;
+      inset: 0;
+      background-color: var(--bg-primary);
+      z-index: 1300;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.45s var(--ease-out-expo);
+    }
+
+    body.is-ready .page-veil {
+      opacity: 0;
+    }
+
+    /* ==========================================================================
+       Stylish Animated Download Notification Card
+       ========================================================================== */
+    .download-toast {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      left: 1rem;
+      margin-inline: auto;
+      max-width: 410px;
+      z-index: 1250;
+      background-color: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 46px rgba(15, 34, 25, 0.16);
+      padding: 0.95rem 1.05rem 1.1rem;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(24px) scale(0.96);
+      transition:
+        opacity 0.35s var(--ease-out-expo),
+        transform 0.42s var(--ease-spring);
+    }
+
+    .download-toast.is-shown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .download-toast__row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .download-toast__icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background-color: var(--accent-soft);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .download-toast.is-shown .download-toast__icon {
+      animation: toastIconPop 0.55s var(--ease-spring) 0.08s both;
+    }
+
+    @keyframes toastIconPop {
+      0% { transform: scale(0.6); }
+      70% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .download-toast__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .download-toast.is-shown .download-toast__arrow {
+      animation: arrowDrop 1.2s ease-in-out infinite;
+    }
+
+    @keyframes arrowDrop {
+      0%, 100% { transform: translateY(-1px); }
+      50% { transform: translateY(3px); }
+    }
+
+    .download-toast__content {
+      flex: 1;
+      min-width: 0;
+      padding-right: 1.4rem;
+    }
+
+    .download-toast__title {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.93rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.15rem;
+    }
+
+    .download-toast__desc {
+      margin: 0;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    .download-toast__close {
+      position: absolute;
+      top: 0.65rem;
+      right: 0.65rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      background-color: var(--bg-secondary);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .download-toast__close:hover {
+      background-color: var(--accent-soft);
+      color: var(--primary);
+    }
+
+    .download-toast__progress {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 3.5px;
+      background-color: var(--bg-secondary);
+    }
+
+    .download-toast__progress-fill {
+      height: 100%;
+      width: 100%;
+      background-color: var(--accent);
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    .download-toast.is-shown .download-toast__progress-fill {
+      animation: toastProgress 5s linear forwards;
+    }
+
+    @keyframes toastProgress {
+      from { transform: scaleX(1); }
+      to { transform: scaleX(0); }
+    }
+
+    /* Containers & Sections */
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 3.5vw, 1.75rem);
+    }
+
+    .container--narrow {
+      max-width: 840px;
+    }
+
+    .section {
+      padding-block: clamp(3.5rem, 6.5vw, 6rem);
+    }
+
+    .section--tinted {
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .section-header {
+      max-width: 650px;
+      margin-inline: auto;
+      text-align: center;
+      margin-bottom: clamp(2.25rem, 4.5vw, 3.5rem);
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-heading);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      background-color: var(--accent-soft);
+      padding: 0.36rem 0.9rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 0.9rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.65rem, 3.3vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: clamp(0.95rem, 1.4vw, 1.04rem);
+      margin-bottom: 0;
+    }
+
+    /* Touch-Friendly Buttons with Micro-Interactions */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      min-height: 44px;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+      transition:
+        background-color var(--transition-base),
+        color var(--transition-base),
+        border-color var(--transition-base),
+        transform var(--transition-base),
+        box-shadow var(--transition-base);
+    }
+
+    .btn--sm {
+      font-size: 0.86rem;
+      padding: 0.5rem 1.05rem;
+      min-height: 40px;
+    }
+
+    .btn--lg {
+      font-size: 0.96rem;
+      padding: 0.88rem 1.45rem;
+      min-height: 48px;
+    }
+
+    .btn--full {
+      width: 100%;
+      padding: 0.88rem 1.25rem;
+    }
+
+    .btn--primary {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      box-shadow: 0 6px 16px rgba(8, 127, 91, 0.16);
+    }
+
+    .btn--primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(8, 127, 91, 0.24);
+    }
+
+    .btn--primary:hover .btn__icon {
+      transform: translateY(2px);
+    }
+
+    .btn--primary:active {
+      transform: translateY(0) scale(0.985);
+    }
+
+    .btn--secondary {
+      background-color: var(--surface);
+      color: var(--text-main);
+      border-color: var(--border-subtle);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .btn--secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn__icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      transition: transform var(--transition-base);
+    }
+
+    .inline-link {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      word-break: break-word;
+    }
+
+    /* Sticky Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background-color: rgba(250, 252, 250, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition:
+        background-color var(--transition-base),
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+    }
+
+    .navbar.is-scrolled {
+      background-color: rgba(255, 255, 255, 0.98);
+      border-bottom-color: var(--border-subtle);
+      box-shadow: 0 8px 24px rgba(24, 37, 31, 0.045);
+    }
+
+    .navbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      min-height: 70px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: clamp(0.88rem, 2.5vw, 1.05rem);
+      color: var(--text-main);
+      min-width: 0;
+    }
+
+    .brand__text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      overflow: hidden;
+      box-shadow: var(--shadow-xs);
+      flex-shrink: 0;
+      transition: transform var(--transition-base);
+    }
+
+    .brand:hover .brand__icon {
+      transform: scale(1.06) rotate(-2deg);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 1.85rem;
+    }
+
+    .nav-link {
+      font-size: 0.93rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      position: relative;
+      padding-block: 0.3rem;
+      transition: color var(--transition-base);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-base);
+    }
+
+    .nav-link:hover,
+    .nav-link.is-active {
+      color: var(--primary);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.is-active::after {
+      transform: scaleX(1);
+    }
+
+    .navbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-shrink: 0;
+    }
+
+    .navbar__cta-desktop {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+    }
+
+    .menu-toggle__bar {
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-main);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-block: 0.85rem 1.4rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .mobile-menu__nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .mobile-menu__link {
+      padding: 0.78rem 0.5rem;
+      font-weight: 600;
+      font-size: 0.98rem;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--bg-secondary);
+    }
+
+    .mobile-menu__cta {
+      margin-top: 0.65rem;
+    }
+
+    /* Hero Section with Choreographed Entrance */
+    .hero {
+      position: relative;
+      padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3.5rem, 6vw, 5.75rem);
+      overflow: hidden;
+    }
+
+    .hero__decor {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .decor-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .decor-circle--1 {
+      width: 460px;
+      height: 460px;
+      top: -160px;
+      right: -130px;
+      background-color: rgba(240, 248, 243, 0.8);
+    }
+
+    .decor-circle--2 {
+      width: 260px;
+      height: 260px;
+      bottom: 20px;
+      left: -100px;
+      background-color: rgba(227, 245, 236, 0.5);
+    }
+
+    .decor-grid {
+      position: absolute;
+      top: 64px;
+      right: 6%;
+      width: 170px;
+      height: 170px;
+      background-image: radial-gradient(var(--border-strong) 1.5px, transparent 1.5px);
+      background-size: 18px 18px;
+      opacity: 0.55;
+    }
+
+    .hero__grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      gap: 2.75rem;
+    }
+
+    .hero__content {
+      text-align: center;
+    }
+
+    .hero-anim {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.7s var(--ease-out-expo),
+        transform 0.7s var(--ease-out-expo);
+    }
+
+    body.is-ready .hero-anim {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    body.is-ready .hero-anim--1 { transition-delay: 60ms; }
+    body.is-ready .hero-anim--2 { transition-delay: 140ms; }
+    body.is-ready .hero-anim--3 { transition-delay: 220ms; }
+    body.is-ready .hero-anim--4 { transition-delay: 300ms; }
+    body.is-ready .hero-anim--5 { transition-delay: 380ms; }
+    body.is-ready .hero-anim--visual { transition-delay: 200ms; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--primary);
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      padding: 0.36rem 0.9rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 1.2rem;
+    }
+
+    .eyebrow__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      animation: pulseDot 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.38); opacity: 0.6; }
+    }
+
+    .hero__title {
+      font-size: clamp(2rem, 5.2vw, 3.3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.05rem;
+    }
+
+    .hero__subtitle {
+      font-size: clamp(0.98rem, 1.5vw, 1.08rem);
+      color: var(--text-muted);
+      max-width: 530px;
+      margin-inline: auto;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero__cta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 370px;
+      margin-inline: auto;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero__cta .btn {
+      width: 100%;
+    }
+
+    .hero__meta {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    .quick-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem 1.25rem;
+      margin-top: 1.35rem;
+      font-size: 0.84rem;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .quick-strip span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .quick-strip__check {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .hero__visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .hero-preview-hint {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary);
+      background-color: var(--accent-soft);
+      padding: 0.28rem 0.85rem;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ==========================================================================
+       Realistic Android Smartphone Frames & Crisp Native-Style UI Mockups
+       ========================================================================== */
+    .phone-frame {
+      width: min(296px, 86vw);
+      background-color: #17211D;
+      border-radius: 36px;
+      padding: 10px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid #2E3D36;
+      position: relative;
+      transition: box-shadow var(--transition-base);
+    }
+
+    .phone-frame--showcase {
+      width: 248px;
+      border-radius: 30px;
+      padding: 9px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .phone-frame--download {
+      width: min(262px, 82vw);
+      border-radius: 32px;
+      padding: 10px;
+    }
+
+    .phone-frame--lightbox {
+      width: min(306px, 72vw);
+      border-radius: 36px;
+      padding: 10px;
+    }
+
+    .phone-frame__top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 2px auto 8px;
+    }
+
+    .phone-frame__speaker {
+      width: 48px;
+      height: 4px;
+      background-color: #34433C;
+      border-radius: 4px;
+    }
+
+    .phone-frame__camera {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #293831;
+    }
+
+    .phone-screen {
+      background-color: #FAFCFA;
+      border-radius: 26px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 492px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+      color: var(--text-main);
+      position: relative;
+    }
+
+    .phone-frame--showcase .phone-screen {
+      min-height: 438px;
+      border-radius: 22px;
+    }
+
+    .phone-frame--download .phone-screen {
+      min-height: 430px;
+    }
+
+    /* Android Status Bar */
+    .app-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.48rem 0.9rem 0.34rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-main);
+      background-color: var(--surface);
+    }
+
+    .app-status-bar__icons {
+      display: flex;
+      align-items: center;
+      gap: 0.38rem;
+    }
+
+    .app-status-bar__icons svg {
+      width: 12px;
+      height: 12px;
+      color: var(--text-main);
+    }
+
+    .battery-icon {
+      display: inline-flex;
+      align-items: center;
+      width: 17px;
+      height: 9px;
+      border: 1px solid var(--text-main);
+      border-radius: 2px;
+      padding: 1px;
+    }
+
+    .battery-icon span {
+      display: block;
+      width: 82%;
+      height: 100%;
+      background-color: var(--primary);
+      border-radius: 1px;
+    }
+
+    /* App Top Bar */
+    .app-topbar {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.58rem 0.85rem;
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .app-topbar--list {
+      justify-content: space-between;
+    }
+
+    .app-topbar--list strong {
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .app-topbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--primary);
+    }
+
+    .app-topbar__actions svg,
+    .app-back-btn svg,
+    .app-menu-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .app-topbar__info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      flex: 1;
+    }
+
+    .app-topbar__info strong {
+      font-size: 0.78rem;
+    }
+
+    .app-topbar__info span {
+      font-size: 0.63rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* App Search Input Pill */
+    .app-search-bar {
+      margin: 0.55rem 0.75rem 0.35rem;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 0.36rem 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.42rem;
+      font-size: 0.66rem;
+      color: var(--text-muted);
+    }
+
+    .app-search-bar svg {
+      width: 13px;
+      height: 13px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* Avatars */
+    .app-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.74rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .app-avatar--sm {
+      width: 28px;
+      height: 28px;
+      font-size: 0.65rem;
+    }
+
+    .app-avatar--lg {
+      width: 58px;
+      height: 58px;
+      font-size: 1.1rem;
+      margin-inline: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    .app-avatar--alt {
+      background-color: var(--accent);
+    }
+
+    .app-avatar--soft {
+      background-color: var(--accent-soft);
+      color: var(--primary);
+    }
+
+    .app-avatar--ring {
+      box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
+    }
+
+    .online-dot {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      border: 2px solid var(--surface);
+      animation: onlinePulse 2.4s ease-out infinite;
+    }
+
+    @keyframes onlinePulse {
+      0% { box-shadow: 0 0 0 0 rgba(36, 180, 126, 0.55); }
+      70% { box-shadow: 0 0 0 6px rgba(36, 180, 126, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(36, 180, 126, 0); }
+    }
+
+    /* App Views & Tab Transitions */
+    .app-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--surface);
+      position: relative;
+    }
+
+    .app-view[hidden] {
+      display: none;
+    }
+
+    .app-view.is-entering {
+      animation: appFadeIn 0.3s var(--ease-out-expo);
+    }
+
+    @keyframes appFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Chat List / Home Screen */
+    .app-chat-list {
+      flex: 1;
+      background-color: var(--surface);
+    }
+
+    .chat-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.56rem 0.78rem;
+      border-bottom: 1px solid var(--bg-secondary);
+    }
+
+    .chat-row__content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .chat-row__top,
+    .chat-row__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .chat-row__top strong {
+      font-size: 0.73rem;
+      color: var(--text-main);
+    }
+
+    .chat-row__top span {
+      font-size: 0.58rem;
+      color: var(--text-muted);
+    }
+
+    .chat-row--unread .chat-row__top span {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .chat-row__bottom p {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .unread-badge {
+      background-color: var(--accent);
+      color: #FFFFFF;
+      font-size: 0.57rem;
+      font-weight: 700;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      padding-inline: 3px;
+    }
+
+    .app-fab {
+      position: absolute;
+      right: 0.8rem;
+      bottom: 0.8rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 14px rgba(8, 127, 91, 0.25);
+    }
+
+    .app-fab svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Status Screen */
+    .app-status-list {
+      flex: 1;
+      padding: 0.55rem 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      background-color: var(--bg-primary);
+    }
+
+    .status-section-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .status-card {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.52rem 0.65rem;
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+
+    .status-card__info strong {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-main);
+    }
+
+    .status-card__info span {
+      display: block;
+      font-size: 0.61rem;
+      color: var(--text-muted);
+    }
+
+    .status-add-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      color: #FFFFFF;
+      border: 2px solid var(--surface);
+      font-size: 0.62rem;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+    }
+
+    /* Contacts Screen */
+    .app-contacts-list {
+      flex: 1;
+      background-color: var(--surface);
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 0.62rem;
+      padding: 0.55rem 0.78rem;
+      border-bottom: 1px solid var(--bg-secondary);
+    }
+
+    .contact-row__info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .contact-row__info strong {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-main);
+    }
+
+    .contact-row__info span {
+      display: block;
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-chat-pill {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--primary);
+      background-color: var(--accent-soft);
+      padding: 0.24rem 0.55rem;
+      border-radius: var(--radius-pill);
+    }
+
+    /* Profile Screen */
+    .app-profile-body {
+      flex: 1;
+      padding: 0.9rem 0.85rem;
+      text-align: center;
+      background-color: var(--bg-primary);
+    }
+
+    .app-profile-body h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.14rem;
+    }
+
+    .app-profile-handle {
+      display: block;
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      margin-bottom: 0.78rem;
+    }
+
+    .app-profile-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.55rem 0.75rem;
+      text-align: left;
+      margin-bottom: 0.78rem;
+    }
+
+    .profile-field {
+      padding-block: 0.34rem;
+      border-bottom: 1px solid var(--bg-secondary);
+    }
+
+    .profile-field:last-child {
+      border-bottom: none;
+    }
+
+    .profile-field span {
+      display: block;
+      font-size: 0.57rem;
+      color: var(--text-muted);
+    }
+
+    .profile-field strong {
+      font-size: 0.69rem;
+      color: var(--text-main);
+    }
+
+    .app-btn-outline {
+      border: 1px solid var(--border-strong);
+      color: var(--text-main);
+      font-size: 0.69rem;
+      font-weight: 600;
+      padding: 0.44rem;
+      border-radius: 8px;
+      background-color: var(--surface);
+    }
+
+    /* Conversation Screen */
+    .app-chat-body {
+      flex: 1;
+      padding: 0.72rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.52rem;
+      background-color: var(--bg-primary);
+    }
+
+    .app-date-pill {
+      align-self: center;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background-color: var(--bg-secondary);
+      padding: 0.16rem 0.55rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 0.1rem;
+    }
+
+    .chat-bubble {
+      max-width: 84%;
+      padding: 0.48rem 0.66rem;
+      border-radius: 13px;
+      font-size: 0.71rem;
+      line-height: 1.38;
+    }
+
+    .chat-bubble p {
+      margin-bottom: 0.16rem;
+    }
+
+    .chat-bubble span {
+      display: block;
+      font-size: 0.56rem;
+      text-align: right;
+      opacity: 0.75;
+    }
+
+    .chat-bubble--received {
+      align-self: flex-start;
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-bubble--sent {
+      align-self: flex-end;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border-bottom-right-radius: 4px;
+    }
+
+    .app-composer {
+      display: flex;
+      align-items: center;
+      gap: 0.42rem;
+      padding: 0.5rem 0.65rem;
+      background-color: var(--surface);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .app-composer__emoji {
+      color: var(--text-muted);
+      display: grid;
+      place-items: center;
+    }
+
+    .app-composer__emoji svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .app-composer__input {
+      flex: 1;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background-color: var(--bg-secondary);
+      padding: 0.36rem 0.62rem;
+      border-radius: var(--radius-pill);
+    }
+
+    .app-composer__send {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      display: grid;
+      place-items: center;
+    }
+
+    .app-composer__send svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Login / Auth Screen */
+    .app-auth-body {
+      flex: 1;
+      padding: 1.15rem 0.9rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: var(--bg-primary);
+    }
+
+    .app-auth-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.82rem;
+      display: grid;
+      place-items: center;
+      margin-bottom: 0.68rem;
+    }
+
+    .app-auth-body h4 {
+      font-size: 0.96rem;
+      margin-bottom: 0.22rem;
+    }
+
+    .app-auth-body p {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .app-input-mock {
+      margin-bottom: 0.56rem;
+    }
+
+    .app-input-mock span {
+      display: block;
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.18rem;
+    }
+
+    .app-input-mock div {
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.42rem 0.58rem;
+      font-size: 0.66rem;
+      color: var(--text-main);
+    }
+
+    .app-btn-solid {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.54rem;
+      border-radius: 8px;
+      margin-top: 0.3rem;
+    }
+
+    .app-auth-footer {
+      text-align: center;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      margin-top: 0.72rem;
+    }
+
+    .app-auth-footer strong {
+      color: var(--primary);
+    }
+
+    /* 4-Tab Bottom Navigation Bar (Home, Status, Contacts, Profile) */
+    .app-bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 0.42rem 0.35rem 0.32rem;
+      background-color: var(--surface);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .app-nav-tab {
+      background: none;
+      border: none;
+      padding: 0.2rem 0.15rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.16rem;
+      font-size: 0.57rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 8px;
+      transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .app-nav-tab svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .app-nav-tab.is-active {
+      color: var(--primary);
+    }
+
+    .app-nav-tab--interactive:hover {
+      background-color: var(--bg-secondary);
+      color: var(--primary);
+    }
+
+    .app-nav-tab--interactive:active {
+      transform: scale(0.94);
+    }
+
+    .android-gesture-bar {
+      background-color: var(--surface);
+      padding: 0.28rem 0 0.36rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .android-gesture-bar span {
+      width: 78px;
+      height: 3.5px;
+      border-radius: 99px;
+      background-color: #CBD6CF;
+    }
+
+    /* ==========================================================================
+       Feature Cards — Detailed Interactive Hover & Entrance Animations
+       ========================================================================== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: clamp(1.45rem, 3vw, 1.9rem);
+      position: relative;
+      overflow: hidden;
+      --mx: 50%;
+      --my: 50%;
+      transition:
+        transform 0.35s var(--ease-out-expo),
+        border-color var(--transition-base),
+        box-shadow 0.35s var(--ease-out-expo);
+    }
+
+    /* Subtle top emerald accent bar */
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.38s var(--ease-out-expo);
+    }
+
+    /* Soft cursor-reactive mint sheen */
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(280px circle at var(--mx) var(--my), rgba(36, 180, 126, 0.08), transparent 70%);
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-strong);
+      box-shadow: 0 18px 40px rgba(8, 127, 91, 0.09);
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-card:hover::after {
+      opacity: 1;
+    }
+
+    .feature-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.15rem;
+      position: relative;
+      z-index: 1;
+      transition:
+        transform 0.38s var(--ease-spring),
+        background-color var(--transition-base),
+        border-color var(--transition-base),
+        color var(--transition-base);
+    }
+
+    .feature-card:hover .feature-card__icon {
+      transform: translateY(-2px) rotate(-4deg) scale(1.06);
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .feature-card__icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .feature-card__title {
+      font-size: 1.12rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+      transition: color var(--transition-base);
+    }
+
+    .feature-card:hover .feature-card__title {
+      color: var(--primary);
+    }
+
+    .feature-card__text {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      margin-bottom: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ==========================================================================
+       Screenshots Showcase — Card Float + "Tap to Inspect" Micro-Cue
+       ========================================================================== */
+    .screenshots-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .screenshots-hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    .screenshots-arrows {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background-color: var(--surface);
+      color: var(--text-main);
+      font-size: 1.2rem;
+      display: grid;
+      place-items: center;
+      transition: border-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+    }
+
+    .carousel-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: scale(1.06);
+    }
+
+    .screenshots-grid {
+      display: flex;
+      gap: 1.4rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 0.45rem 0.25rem 0.95rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-strong) transparent;
+    }
+
+    .screenshot-item {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .screenshot-trigger {
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 32px;
+      position: relative;
+      transition: transform 0.38s var(--ease-out-expo);
+    }
+
+    .screenshot-trigger:hover {
+      transform: translateY(-9px) scale(1.02);
+    }
+
+    .screenshot-trigger:hover .phone-frame--showcase {
+      box-shadow: 0 24px 48px rgba(8, 127, 91, 0.16);
+      border-color: #3D544A;
+    }
+
+    .screenshot-trigger:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 6px;
+    }
+
+    .inspect-pill {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(8px);
+      background-color: var(--primary);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.34rem 0.8rem;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 8px 18px rgba(8, 127, 91, 0.28);
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+      transition: opacity 0.25s ease, transform 0.3s var(--ease-out-expo);
+    }
+
+    .screenshot-trigger:hover .inspect-pill {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .screenshot-caption {
+      margin-top: 1rem;
+      max-width: 240px;
+      transition: transform var(--transition-base);
+    }
+
+    .screenshot-item:hover .screenshot-caption h3 {
+      color: var(--primary);
+    }
+
+    .screenshot-caption h3 {
+      font-size: 1.03rem;
+      margin-bottom: 0.2rem;
+      transition: color var(--transition-base);
+    }
+
+    .screenshot-caption p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    /* ==========================================================================
+       About, Sequential Chat Bubbles, Highlights & Support Card
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .about-card-ui {
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.35rem, 3vw, 1.85rem);
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .about-card-ui:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 46px rgba(24, 37, 31, 0.09);
+    }
+
+    .about-card-ui__header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--bg-secondary);
+      margin-bottom: 1.2rem;
+    }
+
+    .about-card-ui__header strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+    }
+
+    .about-card-ui__header span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .about-card-ui__messages {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .ui-line-bubble {
+      max-width: 86%;
+      padding: 0.8rem 1rem;
+      border-radius: 14px;
+      font-size: 0.91rem;
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+      transition:
+        opacity 0.55s var(--ease-out-expo),
+        transform 0.55s var(--ease-out-expo);
+    }
+
+    .about-card-ui.is-revealed .ui-line-bubble:nth-child(1) {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition-delay: 120ms;
+    }
+
+    .about-card-ui.is-revealed .ui-line-bubble:nth-child(2) {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition-delay: 280ms;
+    }
+
+    .about-card-ui.is-revealed .ui-line-bubble:nth-child(3) {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition-delay: 440ms;
+    }
+
+    .ui-line-bubble--left {
+      align-self: flex-start;
+      background-color: var(--bg-secondary);
+      color: var(--text-main);
+      border-bottom-left-radius: 4px;
+    }
+
+    .ui-line-bubble--right {
+      align-self: flex-end;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border-bottom-right-radius: 4px;
+    }
+
+    .about-card-ui__footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      padding-top: 0.95rem;
+      border-top: 1px solid var(--bg-secondary);
+    }
+
+    .about-text {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+      margin-top: 1.35rem;
+    }
+
+    .about-highlight {
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.15rem;
+      transition:
+        transform var(--transition-base),
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+    }
+
+    .about-highlight:hover {
+      transform: translateY(-3px);
+      border-left-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about-highlight strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .about-highlight span {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+    }
+
+    /* Developer & Direct Support Card */
+    .support-card {
+      margin-top: 1.3rem;
+      background-color: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      box-shadow: var(--shadow-xs);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .support-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .support-card__top {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .support-card__info strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+    }
+
+    .support-card__info span {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .support-card__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .copy-feedback {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* ==========================================================================
+       How It Works Step Cards — Number Fill + Desktop Connectors
+       ========================================================================== */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .step-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: clamp(1.45rem, 3vw, 1.95rem) 1.55rem;
+      position: relative;
+      transition:
+        transform 0.35s var(--ease-out-expo),
+        border-color var(--transition-base),
+        box-shadow 0.35s var(--ease-out-expo);
+    }
+
+    .step-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step-card__number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background-color: var(--accent-soft);
+      color: var(--primary);
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.96rem;
+      margin-bottom: 1.05rem;
+      transition:
+        background-color var(--transition-base),
+        color var(--transition-base),
+        transform 0.35s var(--ease-spring);
+    }
+
+    .step-card:hover .step-card__number {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      transform: scale(1.08);
+    }
+
+    .step-card__title {
+      font-size: 1.12rem;
+      margin-bottom: 0.45rem;
+      transition: color var(--transition-base);
+    }
+
+    .step-card:hover .step-card__title {
+      color: var(--primary);
+    }
+
+    .step-card__text {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      margin-bottom: 0;
+    }
+
+    /* ==========================================================================
+       FAQ Accordion Cards — Smooth Height + Content Reveal
+       ========================================================================== */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .faq-item {
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition:
+        border-color var(--transition-base),
+        box-shadow var(--transition-base),
+        transform var(--transition-base);
+    }
+
+    .faq-item:hover {
+      border-color: var(--border-strong);
+      transform: translateX(3px);
+    }
+
+    .faq-item.is-open {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+      transform: none;
+    }
+
+    .faq-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.15rem 1.3rem;
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      text-align: left;
+      font-family: var(--font-heading);
+      font-size: clamp(0.95rem, 1.5vw, 1.03rem);
+      font-weight: 700;
+      color: var(--text-main);
+      transition: color var(--transition-base);
+    }
+
+    .faq-item.is-open .faq-trigger {
+      color: var(--primary);
+    }
+
+    .faq-icon {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background-color: var(--primary);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .faq-icon::before {
+      width: 14px;
+      height: 2px;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-icon::after {
+      width: 2px;
+      height: 14px;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-item.is-open .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .faq-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s var(--ease-out-expo);
+    }
+
+    .faq-item.is-open .faq-panel {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-panel__inner {
+      overflow: hidden;
+    }
+
+    .faq-panel__inner p {
+      padding: 0 1.3rem 1.3rem;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      margin-bottom: 0;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.3s ease, transform 0.3s var(--ease-out-expo);
+    }
+
+    .faq-item.is-open .faq-panel__inner p {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Download Section */
+    .download-box {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.65rem, 4vw, 3.25rem) clamp(1.2rem, 3.5vw, 3.25rem);
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      gap: 2.25rem;
+      transition: box-shadow var(--transition-base), border-color var(--transition-base);
+    }
+
+    .download-box:hover {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-md);
+    }
+
+    .download-app-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .download-app-badge__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+    }
+
+    .download-app-badge .section-label {
+      margin-bottom: 0.25rem;
+    }
+
+    .download-version {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    .download-box__title {
+      font-size: clamp(1.55rem, 3vw, 2.15rem);
+      margin-bottom: 0.75rem;
+    }
+
+    .download-box__text {
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 1.4rem;
+    }
+
+    .download-box__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .install-guide {
+      background-color: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.2rem;
+      transition: border-color var(--transition-base);
+    }
+
+    .install-guide:hover {
+      border-color: var(--border-strong);
+    }
+
+    .install-guide h3 {
+      font-size: 0.91rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .install-guide ol {
+      margin: 0;
+      padding-left: 1.15rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+    }
+
+    .download-box__visual {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--surface);
+      border-top: 1px solid var(--border-subtle);
+      padding-block: 3.5rem 2rem;
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-bottom: 2.25rem;
+      border-bottom: 1px solid var(--bg-secondary);
+    }
+
+    .footer__desc {
+      color: var(--text-muted);
+      font-size: 0.91rem;
+      max-width: 320px;
+      margin-top: 0.85rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .footer__meta {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      font-weight: 500;
+      margin-bottom: 0;
+      word-break: break-word;
+    }
+
+    .footer__col h4 {
+      font-size: 0.94rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .footer__col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .footer__col a,
+    .footer__col button {
+      background: none;
+      border: none;
+      padding: 0.15rem 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: left;
+      word-break: break-word;
+      transition: color var(--transition-base), transform var(--transition-base);
+    }
+
+    .footer__col a:hover,
+    .footer__col button:hover {
+      color: var(--primary);
+      transform: translateX(3px);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .social-link {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background-color: var(--bg-primary);
+      display: grid;
+      place-items: center;
+      color: var(--text-main);
+      transition: border-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+    }
+
+    .social-link:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .social-link svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .footer__bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      padding-top: 1.4rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .footer__bottom p {
+      margin-bottom: 0;
+    }
+
+    /* Modals (Lightbox & Legal Modal) */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal[hidden] {
+      display: none;
+    }
+
+    .modal.is-visible {
+      opacity: 1;
+    }
+
+    .modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(24, 37, 31, 0.74);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal__dialog {
+      position: relative;
+      z-index: 1;
+      background-color: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 0.85rem 1.35rem;
+      max-width: 550px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+      transform: scale(0.94);
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+
+    .modal__dialog--legal {
+      max-width: 720px;
+      max-height: 86vh;
+      padding: 2.25rem 1.35rem;
+    }
+
+    .modal.is-visible .modal__dialog {
+      transform: scale(1);
+    }
+
+    .modal__close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.85rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background-color: var(--bg-primary);
+      font-size: 1.35rem;
+      line-height: 1;
+      color: var(--text-main);
+      display: grid;
+      place-items: center;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .modal__close:hover {
+      background-color: var(--accent-soft);
+      color: var(--primary);
+    }
+
+    .lightbox__stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .lightbox__nav {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background-color: var(--surface);
+      font-size: 1.35rem;
+      color: var(--text-main);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: border-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+    }
+
+    .lightbox__nav:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: scale(1.08);
+    }
+
+    .lightbox__caption {
+      text-align: center;
+      margin-top: 1rem;
+      padding-inline: 0.5rem;
+    }
+
+    .lightbox__caption h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.22rem;
+    }
+
+    .lightbox__caption p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    .legal-title {
+      font-size: clamp(1.45rem, 3vw, 1.95rem);
+      margin-bottom: 0.35rem;
+      padding-right: 2.25rem;
+    }
+
+    .legal-updated {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.65rem;
+    }
+
+    .legal-section {
+      margin-bottom: 1.4rem;
+    }
+
+    .legal-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .legal-section h4 {
+      font-size: 1.02rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .legal-section p,
+    .legal-section li {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .legal-section ul {
+      padding-left: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Premium Floating & Reveal Animations */
+    .animate-float {
+      animation: phoneFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes phoneFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
+    .reveal,
+    .reveal-stagger {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity var(--transition-reveal),
+        transform var(--transition-reveal);
+    }
+
+    .reveal.is-revealed,
+    .reveal-stagger.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       Responsive Breakpoints for All Devices
+       ========================================================================== */
+
+    @media (min-width: 480px) {
+      .navbar__cta-desktop {
+        display: inline-flex;
+      }
+
+      .hero__cta {
+        flex-direction: row;
+        justify-content: center;
+        max-width: none;
+      }
+
+      .hero__cta .btn {
+        width: auto;
+      }
+
+      .download-toast {
+        left: auto;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        margin-inline: 0;
+      }
+
+      .modal__dialog {
+        padding: 1.85rem 1.35rem 1.5rem;
+      }
+
+      .lightbox__stage {
+        gap: 0.75rem;
+      }
+
+      .lightbox__nav {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media (min-width: 640px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-highlights {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .footer__grid {
+        grid-template-columns: 1.5fr 1fr 1fr;
+      }
+
+      .footer__bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal__dialog--legal {
+        padding: 2.5rem;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .nav-links {
+        display: flex;
+      }
+
+      .menu-toggle,
+      .mobile-menu {
+        display: none !important;
+      }
+
+      .hero__grid {
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 3.25rem;
+      }
+
+      .hero__content {
+        text-align: left;
+      }
+
+      .hero__subtitle {
+        margin-inline: 0;
+      }
+
+      .hero__cta {
+        justify-content: flex-start;
+      }
+
+      .quick-strip {
+        justify-content: flex-start;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+
+      .screenshots-controls {
+        display: none;
+      }
+
+      .screenshots-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem 1.75rem;
+        overflow-x: visible;
+        padding: 0;
+        justify-items: center;
+      }
+
+      .screenshot-item {
+        flex: initial;
+      }
+
+      .about-grid {
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 3.75rem;
+      }
+
+      /* Subtle connector line between step cards on desktop */
+      .steps-grid::before {
+        content: "";
+        position: absolute;
+        top: 52px;
+        left: 16%;
+        right: 16%;
+        height: 2px;
+        background: repeating-linear-gradient(
+          to right,
+          var(--border-strong) 0,
+          var(--border-strong) 6px,
+          transparent 6px,
+          transparent 12px
+        );
+        z-index: 0;
+      }
+
+      .step-card {
+        z-index: 1;
+      }
+
+      .download-box {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+
+      .footer__grid {
+        grid-template-columns: 1.6fr 1fr 1fr 0.9fr;
+      }
+    }
+
+    /* Accessibility: Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal,
+      .reveal-stagger,
+      .hero-anim,
+      .ui-line-bubble {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Smooth Page Entrance Veil -->
+  <div class="page-veil" aria-hidden="true"></div>
+
+  <!-- Reading Progress Bar -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__bar" id="scrollProgressBar"></div>
+  </div>
+
+  <!-- Stylish Animated Download Notification Card -->
+  <div class="download-toast" id="downloadToast" role="status" aria-live="polite" aria-hidden="true">
+    <div class="download-toast__row">
+      <div class="download-toast__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path class="download-toast__arrow" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M5 18h14" stroke-linecap="round" />
+        </svg>
+      </div>
+      <div class="download-toast__content">
+        <strong class="download-toast__title">Downloading Android APK...</strong>
+        <p class="download-toast__desc">Your Global Private Chatting file is starting. Check your browser’s Downloads bar to install.</p>
+      </div>
+    </div>
+    <button type="button" class="download-toast__close" id="downloadToastClose" aria-label="Dismiss notification">&times;</button>
+    <div class="download-toast__progress"><div class="download-toast__progress-fill"></div></div>
+  </div>
+
+  <!-- Sticky Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="#home" class="brand" aria-label="Global Private Chatting Home">
+        <span class="brand__icon" aria-hidden="true">
+          <!-- Original App Logo SVG -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logoBg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#1E6BFF" />
+                <stop offset="100%" stop-color="#0A2B99" />
+              </linearGradient>
+              <linearGradient id="bubbleFill" x1="12" y1="14" x2="50" y2="44" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#174EE2" />
+                <stop offset="100%" stop-color="#051B78" />
+              </linearGradient>
+              <linearGradient id="shieldFill" x1="34" y1="32" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#3FE0FF" />
+                <stop offset="100%" stop-color="#1D75D8" />
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="14" fill="url(#logoBg)" />
+            <path
+              d="M21 15H42C48.0751 15 53 19.9249 53 26V31C53 37.0751 48.0751 42 42 42H24.5L17.5 47.5V41.5C13.2 40 10 35.9 10 31V26C10 19.9249 14.9249 15 21 15Z"
+              fill="url(#bubbleFill)"
+              stroke="#9FC4FF"
+              stroke-width="1.4"
+            />
+            <rect x="16" y="22.5" width="22" height="3.2" rx="1.6" fill="#FFFFFF" />
+            <rect x="16" y="28" width="15" height="3.2" rx="1.6" fill="#FFFFFF" />
+            <path
+              d="M42 32.5C44.5 34.8 47.5 35.8 50.5 36.2V42.4C50.5 47.4 46.8 51.3 42 53C37.2 51.3 33.5 47.4 33.5 42.4V36.2C36.5 35.8 39.5 34.8 42 32.5Z"
+              fill="url(#shieldFill)"
+              stroke="#A5F3FC"
+              stroke-width="1.3"
+            />
+            <circle cx="42" cy="41.2" r="2.1" fill="#0B2E7A" />
+            <path d="M40.8 42.6H43.2L43.8 46.2H40.2L40.8 42.6Z" fill="#0B2E7A" />
+          </svg>
+        </span>
+        <span class="brand__text">Global Private Chatting</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#screenshots" class="nav-link">Screenshots</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </nav>
+
+      <div class="navbar__actions">
+        <a
+          href="https://drive.usercontent.google.com/download?id=1VaOFeUMGprmBVEtPzB48pY2V1Ve6_q2g&export=download&confirm=t"
+          class="btn btn--primary btn--sm navbar__cta-desktop js-apk-link"
+        >
+          Download
+        </a>
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <span class="menu-toggle__bar"></span>
+          <span class="menu-toggle__bar"></span>
+          <span class="menu-toggle__bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-menu" id="mobileMenu" hidden>
+      <nav class="mobile-menu__nav container" aria-label="Mobile Navigation">
+        <a href="#home" class="mobile-menu__link">Home</a>
+        <a href="#features" class="mobile-menu__link">Features</a>
+        <a href="#screenshots" class="mobile-menu__link">Screenshots</a>
+        <a href="#about" class="mobile-menu__link">About &amp; Contact</a>
+        <a href="#faq" class="mobile-menu__link">FAQ</a>
+        <a
+          href="https://drive.usercontent.google.com/download?id=1VaOFeUMGprmBVEtPzB48pY2V1Ve6_q2g&export=download&confirm=t"
+          class="btn btn--primary btn--full mobile-menu__cta js-apk-link"
+        >
+          Download for Android
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section with Choreographed Entrance & Interactive 4-Tab App Preview -->
+    <section class="hero" id="home">
+      <div class="hero__decor" aria-hidden="true">
+        <div class="decor-circle decor-circle--1" data-parallax="0.18"></div>
+        <div class="decor-circle decor-circle--2" data-parallax="-0.14"></div>
+        <div class="decor-grid" data-parallax="0.08"></div>
+      </div>
+
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <div class="eyebrow hero-anim hero-anim--1">
+            <span class="eyebrow__dot"></span>
+            Official Android Messaging App
+          </div>
+          <h1 class="hero__title hero-anim hero-anim--2">Your Conversations.<br />Your Space.</h1>
+          <p class="hero__subtitle hero-anim hero-anim--3">
+            Global Private Chatting brings Home chats, Status updates, Contacts, and your Profile together in one clean, calm Android messaging app—easy to understand from the very first tap.
+          </p>
+          <div class="hero__cta hero-anim hero-anim--4">
+            <a
+              href="https://drive.usercontent.google.com/download?id=1VaOFeUMGprmBVEtPzB48pY2V1Ve6_q2g&export=download&confirm=t"
+              class="btn btn--primary btn--lg js-apk-link"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" />
+              </svg>
+              Download for Android
+            </a>
+            <a href="#screenshots" class="btn btn--secondary btn--lg">Explore App Screens</a>
+          </div>
+          <p class="hero__meta hero-anim hero-anim--5">One-click direct APK download • Built for clarity, speed, and everyday use</p>
+
+          <div class="quick-strip hero-anim hero-anim--5">
+            <span><span class="quick-strip__check">✓</span> Home Chats</span>
+            <span><span class="quick-strip__check">✓</span> Status Updates</span>
+            <span><span class="quick-strip__check">✓</span> Contacts &amp; Profile</span>
+          </div>
+        </div>
+
+        <div class="hero__visual hero-anim hero-anim--visual">
+          <span class="hero-preview-hint">Interactive App Preview — Tap bottom tabs</span>
+          <div class="phone-frame animate-float" aria-label="Interactive Global Private Chatting app preview">
+            <div class="phone-frame__top">
+              <div class="phone-frame__speaker"></div>
+              <div class="phone-frame__camera"></div>
+            </div>
+            <div class="phone-screen">
+              <!-- Android Status Bar -->
+              <div class="app-status-bar">
+                <span>9:41</span>
+                <div class="app-status-bar__icons">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" stroke-linecap="round" /></svg>
+                  <span class="battery-icon"><span></span></span>
+                </div>
+              </div>
+
+              <!-- View 1: Home (Chats) -->
+              <div class="app-view" data-hero-view="home">
+                <div class="app-topbar app-topbar--list">
+                  <strong>Home</strong>
+                  <div class="app-topbar__actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                  </div>
+                </div>
+                <div class="app-search-bar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                  <span>Search conversations...</span>
+                </div>
+                <div class="app-chat-list">
+                  <div class="chat-row chat-row--unread">
+                    <div class="app-avatar">AM<span class="online-dot"></span></div>
+                    <div class="chat-row__content">
+                      <div class="chat-row__top">
+                        <strong>Amina Malik</strong>
+                        <span>9:41 AM</span>
+                      </div>
+                      <div class="chat-row__bottom">
+                        <p>Sounds good, talk soon! 👍</p>
+                        <span class="unread-badge">2</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chat-row">
+                    <div class="app-avatar app-avatar--alt">DK</div>
+                    <div class="chat-row__content">
+                      <div class="chat-row__top">
+                        <strong>Daniel Kim</strong>
+                        <span>Yesterday</span>
+                      </div>
+                      <div class="chat-row__bottom">
+                        <p>Sent over the updated details.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chat-row">
+                    <div class="app-avatar app-avatar--soft">SR</div>
+                    <div class="chat-row__content">
+                      <div class="chat-row__top">
+                        <strong>Sara Rahman</strong>
+                        <span>Tue</span>
+                      </div>
+                      <div class="chat-row__bottom">
+                        <p>Let me know when you’re free.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chat-row">
+                    <div class="app-avatar">OH</div>
+                    <div class="chat-row__content">
+                      <div class="chat-row__top">
+                        <strong>Omar Hassan</strong>
+                        <span>Mon</span>
+                      </div>
+                      <div class="chat-row__bottom">
+                        <p>Thanks for the quick reply!</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="app-fab" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14" stroke-linecap="round" /></svg>
+                </div>
+              </div>
+
+              <!-- View 2: Status -->
+              <div class="app-view" data-hero-view="status" hidden>
+                <div class="app-topbar app-topbar--list">
+                  <strong>Status</strong>
+                  <div class="app-topbar__actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
+                  </div>
+                </div>
+                <div class="app-status-list">
+                  <div class="status-card">
+                    <div class="app-avatar app-avatar--soft">ZA<span class="status-add-badge">+</span></div>
+                    <div class="status-card__info">
+                      <strong>My Status</strong>
+                      <span>Tap to share a status update</span>
+                    </div>
+                  </div>
+                  <span class="status-section-label">Recent Updates</span>
+                  <div class="status-card">
+                    <div class="app-avatar app-avatar--ring">AM</div>
+                    <div class="status-card__info">
+                      <strong>Amina Malik</strong>
+                      <span>12 minutes ago</span>
+                    </div>
+                  </div>
+                  <div class="status-card">
+                    <div class="app-avatar app-avatar--alt app-avatar--ring">DK</div>
+                    <div class="status-card__info">
+                      <strong>Daniel Kim</strong>
+                      <span>45 minutes ago</span>
+                    </div>
+                  </div>
+                  <div class="status-card">
+                    <div class="app-avatar app-avatar--soft app-avatar--ring">SR</div>
+                    <div class="status-card__info">
+                      <strong>Sara Rahman</strong>
+                      <span>Today, 8:15 AM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- View 3: Contacts -->
+              <div class="app-view" data-hero-view="contacts" hidden>
+                <div class="app-topbar app-topbar--list">
+                  <strong>Contacts</strong>
+                  <div class="app-topbar__actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                  </div>
+                </div>
+                <div class="app-search-bar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                  <span>Find a contact...</span>
+                </div>
+                <div class="app-contacts-list">
+                  <div class="contact-row">
+                    <div class="app-avatar">AM<span class="online-dot"></span></div>
+                    <div class="contact-row__info">
+                      <strong>Amina Malik</strong>
+                      <span>Available</span>
+                    </div>
+                    <span class="contact-chat-pill">Chat</span>
+                  </div>
+                  <div class="contact-row">
+                    <div class="app-avatar app-avatar--alt">DK</div>
+                    <div class="contact-row__info">
+                      <strong>Daniel Kim</strong>
+                      <span>Hey there! Using GPC</span>
+                    </div>
+                    <span class="contact-chat-pill">Chat</span>
+                  </div>
+                  <div class="contact-row">
+                    <div class="app-avatar app-avatar--soft">OH</div>
+                    <div class="contact-row__info">
+                      <strong>Omar Hassan</strong>
+                      <span>At work</span>
+                    </div>
+                    <span class="contact-chat-pill">Chat</span>
+                  </div>
+                  <div class="contact-row">
+                    <div class="app-avatar">SR</div>
+                    <div class="contact-row__info">
+                      <strong>Sara Rahman</strong>
+                      <span>Available</span>
+                    </div>
+                    <span class="contact-chat-pill">Chat</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- View 4: Profile -->
+              <div class="app-view" data-hero-view="profile" hidden>
+                <div class="app-topbar app-topbar--list">
+                  <strong>Profile</strong>
+                </div>
+                <div class="app-profile-body">
+                  <div class="app-avatar app-avatar--lg">ZA</div>
+                  <h4>Zainab Ali</h4>
+                  <span class="app-profile-handle">@zainab.ali</span>
+                  <div class="app-profile-card">
+                    <div class="profile-field">
+                      <span>Display Name</span>
+                      <strong>Zainab Ali</strong>
+                    </div>
+                    <div class="profile-field">
+                      <span>Email</span>
+                      <strong>zainab@example.com</strong>
+                    </div>
+                    <div class="profile-field">
+                      <span>Status</span>
+                      <strong>Available</strong>
+                    </div>
+                  </div>
+                  <div class="app-btn-outline">Sign Out</div>
+                </div>
+              </div>
+
+              <!-- Interactive 4-Tab Bottom Nav -->
+              <div class="app-bottom-nav" role="tablist" aria-label="App Preview Tabs">
+                <button type="button" class="app-nav-tab app-nav-tab--interactive is-active" data-hero-tab="home" aria-selected="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  <span>Home</span>
+                </button>
+                <button type="button" class="app-nav-tab app-nav-tab--interactive" data-hero-tab="status" aria-selected="false">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="14 5" /><circle cx="12" cy="12" r="3" /></svg>
+                  <span>Status</span>
+                </button>
+                <button type="button" class="app-nav-tab app-nav-tab--interactive" data-hero-tab="contacts" aria-selected="false">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-linecap="round" /></svg>
+                  <span>Contacts</span>
+                </button>
+                <button type="button" class="app-nav-tab app-nav-tab--interactive" data-hero-tab="profile" aria-selected="false">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-3.87 3.58-7 8-7s8 3.13 8 7" stroke-linecap="round" /></svg>
+                  <span>Profile</span>
+                </button>
+              </div>
+              <div class="android-gesture-bar"><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section section--tinted" id="features">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Core Capabilities</span>
+          <h2 class="section-title">Everything organized into four intuitive spaces</h2>
+          <p class="section-subtitle">
+            Every section inside Global Private Chatting is designed for everyday clarity—so new and returning users feel right at home immediately.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card reveal-stagger">
+            <div class="feature-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Private Conversations</h3>
+            <p class="feature-card__text">
+              Manage your one-on-one threads cleanly in the Home tab with readable timestamps, unread indicators, and a clutter-free layout.
+            </p>
+          </article>
+
+          <article class="feature-card reveal-stagger">
+            <div class="feature-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="9" stroke-dasharray="14 5" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Status Section</h3>
+            <p class="feature-card__text">
+              Share quick updates and check recent status posts from your contacts in a dedicated, easy-to-browse Status screen.
+            </p>
+          </article>
+
+          <article class="feature-card reveal-stagger">
+            <div class="feature-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Contact Directory</h3>
+            <p class="feature-card__text">
+              Find people quickly in the Contacts section and start a direct conversation with a single tap—no hunting through menus.
+            </p>
+          </article>
+
+          <article class="feature-card reveal-stagger">
+            <div class="feature-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-3.866 3.582-7 8-7s8 3.134 8 7" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Personal User Profiles</h3>
+            <p class="feature-card__text">
+              View and manage your display name, account details, and availability clearly inside the Profile section.
+            </p>
+          </article>
+
+          <article class="feature-card reveal-stagger">
+            <div class="feature-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Real-time Messaging &amp; Emojis</h3>
+            <p class="feature-card__text">
+              Send instant replies and express tone naturally with built-in emoji support right inside the conversation composer.
+            </p>
+          </article>
+
+          <article class="feature-card reveal-stagger">
+            <div class="feature-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="4" width="18" height="16" rx="3" />
+                <path d="M7 15h10M7 9h6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3 class="feature-card__title">Simple 4-Tab Navigation</h3>
+            <p class="feature-card__text">
+              Switch smoothly between Home, Status, Contacts, and Profile with a familiar Android bottom navigation layout.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Screenshots Showcase (All 6 Genuine Android Screens) -->
+    <section class="section" id="screenshots">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">App Interface Gallery</span>
+          <h2 class="section-title">Explore every screen of the Android app</h2>
+          <p class="section-subtitle">
+            Preview Home, Status, Contacts, Profile, Live Conversation, and Account Login before you download. Click any screen to inspect it up close.
+          </p>
+        </div>
+
+        <div class="screenshots-controls">
+          <p class="screenshots-hint">Swipe sideways or tap a screen to enlarge</p>
+          <div class="screenshots-arrows">
+            <button type="button" class="carousel-btn" id="carouselPrev" aria-label="Scroll screenshots left">‹</button>
+            <button type="button" class="carousel-btn" id="carouselNext" aria-label="Scroll screenshots right">›</button>
+          </div>
+        </div>
+
+        <div class="screenshots-grid" id="screenshotsTrack">
+          <!-- Screen 1: Home Section (Chats List) -->
+          <div class="screenshot-item reveal-stagger">
+            <button type="button" class="screenshot-trigger" data-screen-index="0" aria-label="Enlarge Home Screen">
+              <div class="phone-frame phone-frame--showcase">
+                <div class="phone-frame__top"><div class="phone-frame__speaker"></div><div class="phone-frame__camera"></div></div>
+                <div class="phone-screen" data-screen-template="0">
+                  <div class="app-status-bar">
+                    <span>9:41</span>
+                    <div class="app-status-bar__icons">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" stroke-linecap="round" /></svg>
+                      <span class="battery-icon"><span></span></span>
+                    </div>
+                  </div>
+                  <div class="app-topbar app-topbar--list">
+                    <strong>Home</strong>
+                    <div class="app-topbar__actions">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                    </div>
+                  </div>
+                  <div class="app-search-bar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                    <span>Search conversations...</span>
+                  </div>
+                  <div class="app-chat-list">
+                    <div class="chat-row chat-row--unread">
+                      <div class="app-avatar">AM<span class="online-dot"></span></div>
+                      <div class="chat-row__content">
+                        <div class="chat-row__top"><strong>Amina Malik</strong><span>9:41 AM</span></div>
+                        <div class="chat-row__bottom"><p>Sounds good, talk soon! 👍</p><span class="unread-badge">2</span></div>
+                      </div>
+                    </div>
+                    <div class="chat-row">
+                      <div class="app-avatar app-avatar--alt">DK</div>
+                      <div class="chat-row__content">
+                        <div class="chat-row__top"><strong>Daniel Kim</strong><span>Yesterday</span></div>
+                        <div class="chat-row__bottom"><p>Sent over the updated details.</p></div>
+                      </div>
+                    </div>
+                    <div class="chat-row">
+                      <div class="app-avatar app-avatar--soft">SR</div>
+                      <div class="chat-row__content">
+                        <div class="chat-row__top"><strong>Sara Rahman</strong><span>Tue</span></div>
+                        <div class="chat-row__bottom"><p>Let me know when you’re free.</p></div>
+                      </div>
+                    </div>
+                    <div class="chat-row">
+                      <div class="app-avatar">OH</div>
+                      <div class="chat-row__content">
+                        <div class="chat-row__top"><strong>Omar Hassan</strong><span>Mon</span></div>
+                        <div class="chat-row__bottom"><p>Thanks for the quick reply!</p></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="app-bottom-nav">
+                    <span class="app-nav-tab is-active">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      <span>Home</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="14 5" /><circle cx="12" cy="12" r="3" /></svg>
+                      <span>Status</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
+                      <span>Contacts</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-3.87 3.58-7 8-7s8 3.13 8 7" stroke-linecap="round" /></svg>
+                      <span>Profile</span>
+                    </span>
+                  </div>
+                  <div class="android-gesture-bar"><span></span></div>
+                </div>
+              </div>
+              <span class="inspect-pill">Tap to Inspect</span>
+            </button>
+            <div class="screenshot-caption">
+              <h3>Home Section</h3>
+              <p>Active chats &amp; quick search</p>
+            </div>
+          </div>
+
+          <!-- Screen 2: Status Section -->
+          <div class="screenshot-item reveal-stagger">
+            <button type="button" class="screenshot-trigger" data-screen-index="1" aria-label="Enlarge Status Screen">
+              <div class="phone-frame phone-frame--showcase">
+                <div class="phone-frame__top"><div class="phone-frame__speaker"></div><div class="phone-frame__camera"></div></div>
+                <div class="phone-screen" data-screen-template="1">
+                  <div class="app-status-bar">
+                    <span>9:41</span>
+                    <div class="app-status-bar__icons">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" stroke-linecap="round" /></svg>
+                      <span class="battery-icon"><span></span></span>
+                    </div>
+                  </div>
+                  <div class="app-topbar app-topbar--list">
+                    <strong>Status</strong>
+                    <div class="app-topbar__actions">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
+                    </div>
+                  </div>
+                  <div class="app-status-list">
+                    <div class="status-card">
+                      <div class="app-avatar app-avatar--soft">ZA<span class="status-add-badge">+</span></div>
+                      <div class="status-card__info">
+                        <strong>My Status</strong>
+                        <span>Tap to add a status update</span>
+                      </div>
+                    </div>
+                    <span class="status-section-label">Recent Updates</span>
+                    <div class="status-card">
+                      <div class="app-avatar app-avatar--ring">AM</div>
+                      <div class="status-card__info">
+                        <strong>Amina Malik</strong>
+                        <span>12 minutes ago</span>
+                      </div>
+                    </div>
+                    <div class="status-card">
+                      <div class="app-avatar app-avatar--alt app-avatar--ring">DK</div>
+                      <div class="status-card__info">
+                        <strong>Daniel Kim</strong>
+                        <span>45 minutes ago</span>
+                      </div>
+                    </div>
+                    <div class="status-card">
+                      <div class="app-avatar app-avatar--soft app-avatar--ring">SR</div>
+                      <div class="status-card__info">
+                        <strong>Sara Rahman</strong>
+                        <span>Today, 8:15 AM</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="app-bottom-nav">
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      <span>Home</span>
+                    </span>
+                    <span class="app-nav-tab is-active">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="14 5" /><circle cx="12" cy="12" r="3" /></svg>
+                      <span>Status</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
+                      <span>Contacts</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-3.87 3.58-7 8-7s8 3.13 8 7" stroke-linecap="round" /></svg>
+                      <span>Profile</span>
+                    </span>
+                  </div>
+                  <div class="android-gesture-bar"><span></span></div>
+                </div>
+              </div>
+              <span class="inspect-pill">Tap to Inspect</span>
+            </button>
+            <div class="screenshot-caption">
+              <h3>Status Section</h3>
+              <p>Share &amp; view recent updates</p>
+            </div>
+          </div>
+
+          <!-- Screen 3: Contacts Section -->
+          <div class="screenshot-item reveal-stagger">
+            <button type="button" class="screenshot-trigger" data-screen-index="2" aria-label="Enlarge Contacts Screen">
+              <div class="phone-frame phone-frame--showcase">
+                <div class="phone-frame__top"><div class="phone-frame__speaker"></div><div class="phone-frame__camera"></div></div>
+                <div class="phone-screen" data-screen-template="2">
+                  <div class="app-status-bar">
+                    <span>9:41</span>
+                    <div class="app-status-bar__icons">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" stroke-linecap="round" /></svg>
+                      <span class="battery-icon"><span></span></span>
+                    </div>
+                  </div>
+                  <div class="app-topbar app-topbar--list">
+                    <strong>Contacts</strong>
+                    <div class="app-topbar__actions">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                    </div>
+                  </div>
+                  <div class="app-search-bar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                    <span>Find a contact...</span>
+                  </div>
+                  <div class="app-contacts-list">
+                    <div class="contact-row">
+                      <div class="app-avatar">AM<span class="online-dot"></span></div>
+                      <div class="contact-row__info"><strong>Amina Malik</strong><span>Available</span></div>
+                      <span class="contact-chat-pill">Chat</span>
+                    </div>
+                    <div class="contact-row">
+                      <div class="app-avatar app-avatar--alt">DK</div>
+                      <div class="contact-row__info"><strong>Daniel Kim</strong><span>Using Global Private Chatting</span></div>
+                      <span class="contact-chat-pill">Chat</span>
+                    </div>
+                    <div class="contact-row">
+                      <div class="app-avatar app-avatar--soft">OH</div>
+                      <div class="contact-row__info"><strong>Omar Hassan</strong><span>At work</span></div>
+                      <span class="contact-chat-pill">Chat</span>
+                    </div>
+                    <div class="contact-row">
+                      <div class="app-avatar">SR</div>
+                      <div class="contact-row__info"><strong>Sara Rahman</strong><span>Available</span></div>
+                      <span class="contact-chat-pill">Chat</span>
+                    </div>
+                  </div>
+                  <div class="app-bottom-nav">
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      <span>Home</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="14 5" /><circle cx="12" cy="12" r="3" /></svg>
+                      <span>Status</span>
+                    </span>
+                    <span class="app-nav-tab is-active">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
+                      <span>Contacts</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-3.87 3.58-7 8-7s8 3.13 8 7" stroke-linecap="round" /></svg>
+                      <span>Profile</span>
+                    </span>
+                  </div>
+                  <div class="android-gesture-bar"><span></span></div>
+                </div>
+              </div>
+              <span class="inspect-pill">Tap to Inspect</span>
+            </button>
+            <div class="screenshot-caption">
+              <h3>Contacts Section</h3>
+              <p>Browse &amp; message people fast</p>
+            </div>
+          </div>
+
+          <!-- Screen 4: Profile Section -->
+          <div class="screenshot-item reveal-stagger">
+            <button type="button" class="screenshot-trigger" data-screen-index="3" aria-label="Enlarge Profile Screen">
+              <div class="phone-frame phone-frame--showcase">
+                <div class="phone-frame__top"><div class="phone-frame__speaker"></div><div class="phone-frame__camera"></div></div>
+                <div class="phone-screen" data-screen-template="3">
+                  <div class="app-status-bar">
+                    <span>9:41</span>
+                    <div class="app-status-bar__icons">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" stroke-linecap="round" /></svg>
+                      <span class="battery-icon"><span></span></span>
+                    </div>
+                  </div>
+                  <div class="app-topbar app-topbar--list">
+                    <strong>Profile</strong>
+                  </div>
+                  <div class="app-profile-body">
+                    <div class="app-avatar app-avatar--lg">ZA</div>
+                    <h4>Zainab Ali</h4>
+                    <span class="app-profile-handle">@zainab.ali</span>
+                    <div class="app-profile-card">
+                      <div class="profile-field"><span>Display Name</span><strong>Zainab Ali</strong></div>
+                      <div class="profile-field"><span>Email</span><strong>zainab@example.com</strong></div>
+                      <div class="profile-field"><span>Status</span><strong>Available</strong></div>
+                    </div>
+                    <div class="app-btn-outline">Sign Out</div>
+                  </div>
+                  <div class="app-bottom-nav">
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      <span>Home</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="14 5" /><circle cx="12" cy="12" r="3" /></svg>
+                      <span>Status</span>
+                    </span>
+                    <span class="app-nav-tab">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
+                      <span>Contacts</span>
+                    </span>
+                    <span class="app-nav-tab is-active">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-3.87 3.58-7 8-7s8 3.13 8 7" stroke-linecap="round" /></svg>
+                      <span>Profile</span>
+                    </span>
+                  </div>
+                  <div class="android-gesture-bar"><span></span></div>
+                </div>
+              </div>
+              <span class="inspect-pill">Tap to Inspect</span>
+            </button>
+            <div class="screenshot-caption">
+              <h3>Profile Section</h3>
+              <p>Clear personal account details</p>
+            </div>
+          </div>
+
+          <!-- Screen 5: Individual Conversation Screen -->
+          <div class="screenshot-item reveal-stagger">
+            <button type="button" class="screenshot-trigger" data-screen-index="4" aria-label="Enlarge Conversation Screen">
+              <div class="phone-frame phone-frame--showcase">
+                <div class="phone-frame__top"><div class="phone-frame__speaker"></div><div class="phone-frame__camera"></div></div>
+                <div class="phone-screen" data-screen-template="4">
+                  <div class="app-status-bar">
+                    <span>9:41</span>
+                    <div class="app-status-bar__icons">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" stroke-linecap="round" /></svg>
+                      <span class="battery-icon"><span></span></span>
+                    </div>
+                  </div>
+                  <div class="app-topbar">
+                    <span class="app-back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+                    <div class="app-avatar app-avatar--sm">DK</div>
+                    <div class="app-topbar__info"><strong>Daniel Kim</strong><span>Online</span></div>
+                    <span class="app-menu-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg></span>
+                  </div>
+                  <div class="app-chat-body">
+                    <div class="app-date-pill">Today</div>
+                    <div class="chat-bubble chat-bubble--received"><p>Hey! Are we still on for the call later?</p><span>11:15 AM</span></div>
+                    <div class="chat-bubble chat-bubble--sent"><p>Yes, 4:00 PM works well for me.</p><span>11:17 AM</span></div>
+                    <div class="chat-bubble chat-bubble--received"><p>Perfect, I’ll message you right before. 🙌</p><span>11:18 AM</span></div>
+                  </div>
+                  <div class="app-composer">
+                    <span class="app-composer__emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" /><path d="M8.5 14.5s1.3 2 3.5 2 3.5-2 3.5-2" stroke-linecap="round" /><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none" /><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none" /></svg></span>
+                    <span class="app-composer__input">Type a message...</span>
+                    <span class="app-composer__send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+                  </div>
+                  <div class="android-gesture-bar"><span></span></div>
+                </div>
+              </div>
+              <span class="inspect-pill">Tap to Inspect</span>
+            </button>
+            <div class="screenshot-caption">
+              <h3>Conversation Screen</h3>
+              <p>Focused real-time chat thread</p>
+            </div>
+          </div>
+
+          <!-- Screen 6: Login & Signup Screen -->
+          <div class="screenshot-item reveal-stagger">
+            <button type="button" class="screenshot-trigger" data-screen-index="5" aria-label="Enlarge Login Screen">
+              <div class="phone-frame phone-frame--showcase">
+                <div class="phone-frame__top"><div class="phone-frame__speaker"></div><div class="phone-frame__camera"></div></div>
+                <div class="phone-screen" data-screen-template="5">
+                  <div class="app-status-bar">
+                    <span>9:41</span>
+                    <div class="app-status-bar__icons">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" stroke-linecap="round" /></svg>
+                      <span class="battery-icon"><span></span></span>
+                    </div>
+                  </div>
+                  <div class="app-auth-body">
+                    <div class="app-auth-badge">GP</div>
+                    <h4>Welcome Back</h4>
+                    <p>Sign in to access Home, Status &amp; Contacts</p>
+                    <div class="app-input-mock"><span>Email address</span><div>name@example.com</div></div>
+                    <div class="app-input-mock"><span>Password</span><div>••••••••••</div></div>
+                    <div class="app-btn-solid">Log In</div>
+                    <div class="app-auth-footer">New here? <strong>Create account</strong></div>
+                  </div>
+                  <div class="android-gesture-bar"><span></span></div>
+                </div>
+              </div>
+              <span class="inspect-pill">Tap to Inspect</span>
+            </button>
+            <div class="screenshot-caption">
+              <h3>Login &amp; Account</h3>
+              <p>Quick sign-in &amp; registration</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Developer Details Section -->
+    <section class="section section--tinted" id="about">
+      <div class="container about-grid">
+        <div class="about-visual">
+          <div class="about-card-ui reveal">
+            <div class="about-card-ui__header">
+              <div class="app-avatar">GP</div>
+              <div>
+                <strong>Global Private Chatting</strong>
+                <span>Built for Android by Sumama Shaikh</span>
+              </div>
+            </div>
+            <div class="about-card-ui__messages">
+              <div class="ui-line-bubble ui-line-bubble--left">
+                Simple, direct messaging without distractions.
+              </div>
+              <div class="ui-line-bubble ui-line-bubble--right">
+                Home chats, Status updates, Contacts, and Profile in one place.
+              </div>
+              <div class="ui-line-bubble ui-line-bubble--left">
+                Follow our official WhatsApp Channel for new updates! 😊
+              </div>
+            </div>
+            <div class="about-card-ui__footer">
+              <span>Home</span>
+              <span>•</span>
+              <span>Status</span>
+              <span>•</span>
+              <span>Contacts</span>
+              <span>•</span>
+              <span>Profile</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-content reveal">
+          <span class="section-label">About &amp; Official Community</span>
+          <h2 class="section-title">Messaging stripped back to what matters</h2>
+          <p class="about-text">
+            Modern communication tools often bury simple conversations under feeds, ads, and cluttered menus. Global Private Chatting was built to offer a calm, dedicated space on Android with clear tabs for Home chats, Status updates, Contacts, and your Profile.
+          </p>
+          <p class="about-text">
+            Every screen—from onboarding and contact discovery to real-time messaging—is structured around clarity, readable text, and effortless navigation.
+          </p>
+
+          <div class="about-highlights">
+            <div class="about-highlight">
+              <strong>Purpose-built UI</strong>
+              <span>Consistent Android layouts crafted for comfortable reading and typing.</span>
+            </div>
+            <div class="about-highlight">
+              <strong>Official WhatsApp Channel</strong>
+              <span>Stay notified about app updates and releases directly on WhatsApp.</span>
+            </div>
+          </div>
+
+          <!-- Developer & Direct Support Card -->
+          <div class="support-card">
+            <div class="support-card__top">
+              <div class="app-avatar">SS</div>
+              <div class="support-card__info">
+                <strong>Developer &amp; Support: Sumama Shaikh</strong>
+                <span>Email: <a href="mailto:sumamashaikh85@gmail.com" class="inline-link">sumamashaikh85@gmail.com</a></span>
+              </div>
+            </div>
+            <div class="support-card__actions">
+              <a
+                href="https://whatsapp.com/channel/0029VbES0pq9mrGihT1hUR00"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn--primary btn--sm"
+              >
+                <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Join WhatsApp Channel
+              </a>
+              <a href="mailto:sumamashaikh85@gmail.com" class="btn btn--secondary btn--sm">Email Support</a>
+              <button type="button" class="btn btn--secondary btn--sm" id="copyEmailBtn">Copy Email</button>
+              <span class="copy-feedback" id="copyFeedback" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Getting Started</span>
+          <h2 class="section-title">Up and running in three simple steps</h2>
+          <p class="section-subtitle">
+            New to Global Private Chatting? Follow these three steps to start messaging in minutes.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card reveal-stagger">
+            <span class="step-card__number">01</span>
+            <h3 class="step-card__title">Create your account</h3>
+            <p class="step-card__text">
+              Download and install the Android APK, then register with your name, email address, and password to set up your personal profile.
+            </p>
+          </article>
+
+          <article class="step-card reveal-stagger">
+            <span class="step-card__number">02</span>
+            <h3 class="step-card__title">Explore Contacts &amp; Status</h3>
+            <p class="step-card__text">
+              Open the Contacts tab to find people, check recent Status updates, and jump right into your Home chat list.
+            </p>
+          </article>
+
+          <article class="step-card reveal-stagger">
+            <span class="step-card__number">03</span>
+            <h3 class="step-card__title">Start chatting</h3>
+            <p class="step-card__text">
+              Exchange real-time text messages and emojis inside a clean, distraction-free conversation screen.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section section--tinted" id="faq">
+      <div class="container container--narrow">
+        <div class="section-header reveal">
+          <span class="section-label">Support &amp; Details</span>
+          <h2 class="section-title">Frequently asked questions</h2>
+          <p class="section-subtitle">
+            Clear answers for first-time visitors about downloading, installing, and using Global Private Chatting.
+          </p>
+        </div>
+
+        <div class="faq-list reveal" id="faqList">
+          <div class="faq-item is-open">
+            <button class="faq-trigger" type="button" aria-expanded="true">
+              <span>What is Global Private Chatting?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel__inner">
+                <p>
+                  Global Private Chatting is an Android messaging application designed for straightforward, real-time conversations. It features four main sections—Home, Status, Contacts, and Profile—along with emoji support and clean conversation screens.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>How can I create an account?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel__inner">
+                <p>
+                  After installing the app on your Android device, open the Signup screen, enter your full name, email address, and password, and tap Sign Up. Once registered, you can manage your details in the Profile section and start chatting.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>Is the application available for Android?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel__inner">
+                <p>
+                  Yes. Global Private Chatting is built specifically for Android devices and is distributed directly as an Android APK package from this official website.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>How can I download the latest version?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel__inner">
+                <p>
+                  Tap any "Download" button on this page to download the APK file directly. You can also follow our official <a href="https://whatsapp.com/channel/0029VbES0pq9mrGihT1hUR00" target="_blank" rel="noopener noreferrer" class="inline-link">WhatsApp Channel</a> for release announcements and updates.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>How can I contact support?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel__inner">
+                <p>
+                  You can contact Sumama Shaikh / Support anytime by emailing <a href="mailto:sumamashaikh85@gmail.com" class="inline-link">sumamashaikh85@gmail.com</a> or following our <a href="https://whatsapp.com/channel/0029VbES0pq9mrGihT1hUR00" target="_blank" rel="noopener noreferrer" class="inline-link">official WhatsApp Channel</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section" id="download">
+      <div class="container">
+        <div class="download-box reveal">
+          <div class="download-box__content">
+            <div class="download-app-badge">
+              <span class="download-app-badge__icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="64" height="64" rx="14" fill="url(#logoBg)" />
+                  <path
+                    d="M21 15H42C48.0751 15 53 19.9249 53 26V31C53 37.0751 48.0751 42 42 42H24.5L17.5 47.5V41.5C13.2 40 10 35.9 10 31V26C10 19.9249 14.9249 15 21 15Z"
+                    fill="url(#bubbleFill)"
+                    stroke="#9FC4FF"
+                    stroke-width="1.4"
+                  />
+                  <rect x="16" y="22.5" width="22" height="3.2" rx="1.6" fill="#FFFFFF" />
+                  <rect x="16" y="28" width="15" height="3.2" rx="1.6" fill="#FFFFFF" />
+                  <path
+                    d="M42 32.5C44.5 34.8 47.5 35.8 50.5 36.2V42.4C50.5 47.4 46.8 51.3 42 53C37.2 51.3 33.5 47.4 33.5 42.4V36.2C36.5 35.8 39.5 34.8 42 32.5Z"
+                    fill="url(#shieldFill)"
+                    stroke="#A5F3FC"
+                    stroke-width="1.3"
+                  />
+                  <circle cx="42" cy="41.2" r="2.1" fill="#0B2E7A" />
+                  <path d="M40.8 42.6H43.2L43.8 46.2H40.2L40.8 42.6Z" fill="#0B2E7A" />
+                </svg>
+              </span>
+              <div>
+                <span class="section-label">Official Android Release</span>
+                <p class="download-version" id="appVersionInfo">Version 1.0.0 • Direct Android APK</p>
+              </div>
+            </div>
+
+            <h2 class="download-box__title">Ready for a cleaner way to message?</h2>
+            <p class="download-box__text">
+              Tap below to download the official Android APK directly to your phone, and join our WhatsApp Channel for new version announcements.
+            </p>
+
+            <div class="download-box__actions">
+              <a
+                href="https://drive.usercontent.google.com/download?id=1VaOFeUMGprmBVEtPzB48pY2V1Ve6_q2g&export=download&confirm=t"
+                id="primaryApkBtn"
+                class="btn btn--primary btn--lg js-apk-link"
+              >
+                <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" />
+                </svg>
+                Download Android APK
+              </a>
+              <a
+                href="https://whatsapp.com/channel/0029VbES0pq9mrGihT1hUR00"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn--secondary btn--lg"
+              >
+                Follow WhatsApp Channel
+              </a>
+            </div>
+
+            <div class="install-guide">
+              <h3>Quick Android Install Guide (First-Time Users)</h3>
+              <ol>
+                <li>Tap <strong>Download Android APK</strong> above—the download starts automatically.</li>
+                <li>Open the downloaded APK file and allow installation from your browser if prompted.</li>
+                <li>Launch the app, create your account, and start using Home, Status, Contacts, and Profile.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="download-box__visual" aria-hidden="true">
+            <div class="phone-frame phone-frame--download animate-float">
+              <div class="phone-frame__top"><div class="phone-frame__speaker"></div><div class="phone-frame__camera"></div></div>
+              <div class="phone-screen">
+                <div class="app-status-bar">
+                  <span>9:41</span>
+                  <div class="app-status-bar__icons">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" stroke-linecap="round" /></svg>
+                    <span class="battery-icon"><span></span></span>
+                  </div>
+                </div>
+                <div class="app-topbar app-topbar--list">
+                  <strong>Home</strong>
+                  <div class="app-topbar__actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" stroke-linecap="round" /></svg>
+                  </div>
+                </div>
+                <div class="app-chat-list">
+                  <div class="chat-row chat-row--unread">
+                    <div class="app-avatar">AM<span class="online-dot"></span></div>
+                    <div class="chat-row__content">
+                      <div class="chat-row__top"><strong>Amina Malik</strong><span>Now</span></div>
+                      <div class="chat-row__bottom"><p>Ready for our chat later? 😊</p><span class="unread-badge">1</span></div>
+                    </div>
+                  </div>
+                  <div class="chat-row">
+                    <div class="app-avatar app-avatar--alt">DK</div>
+                    <div class="chat-row__content">
+                      <div class="chat-row__top"><strong>Daniel Kim</strong><span>11:18 AM</span></div>
+                      <div class="chat-row__bottom"><p>Perfect, I’ll message you right before.</p></div>
+                    </div>
+                  </div>
+                  <div class="chat-row">
+                    <div class="app-avatar app-avatar--soft">SR</div>
+                    <div class="chat-row__content">
+                      <div class="chat-row__top"><strong>Sara Rahman</strong><span>Yesterday</span></div>
+                      <div class="chat-row__bottom"><p>Thanks! Have a great evening.</p></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="app-bottom-nav">
+                  <span class="app-nav-tab is-active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    <span>Home</span>
+                  </span>
+                  <span class="app-nav-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="14 5" /><circle cx="12" cy="12" r="3" /></svg>
+                    <span>Status</span>
+                  </span>
+                  <span class="app-nav-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
+                    <span>Contacts</span>
+                  </span>
+                  <span class="app-nav-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-3.87 3.58-7 8-7s8 3.13 8 7" stroke-linecap="round" /></svg>
+                    <span>Profile</span>
+                  </span>
+                </div>
+                <div class="android-gesture-bar"><span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="#home" class="brand">
+            <span class="brand__icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="64" height="64" rx="14" fill="url(#logoBg)" />
+                <path
+                  d="M21 15H42C48.0751 15 53 19.9249 53 26V31C53 37.0751 48.0751 42 42 42H24.5L17.5 47.5V41.5C13.2 40 10 35.9 10 31V26C10 19.9249 14.9249 15 21 15Z"
+                  fill="url(#bubbleFill)"
+                  stroke="#9FC4FF"
+                  stroke-width="1.4"
+                />
+                <rect x="16" y="22.5" width="22" height="3.2" rx="1.6" fill="#FFFFFF" />
+                <rect x="16" y="28" width="15" height="3.2" rx="1.6" fill="#FFFFFF" />
+                <path
+                  d="M42 32.5C44.5 34.8 47.5 35.8 50.5 36.2V42.4C50.5 47.4 46.8 51.3 42 53C37.2 51.3 33.5 47.4 33.5 42.4V36.2C36.5 35.8 39.5 34.8 42 32.5Z"
+                  fill="url(#shieldFill)"
+                  stroke="#A5F3FC"
+                  stroke-width="1.3"
+                />
+                <circle cx="42" cy="41.2" r="2.1" fill="#0B2E7A" />
+                <path d="M40.8 42.6H43.2L43.8 46.2H40.2L40.8 42.6Z" fill="#0B2E7A" />
+              </svg>
+            </span>
+            <span class="brand__text">Global Private Chatting</span>
+          </a>
+          <p class="footer__desc">
+            A calm, focused Android messaging application built for personal, real-time conversations.
+          </p>
+          <p class="footer__meta">
+            Developer: Sumama Shaikh • <a href="mailto:sumamashaikh85@gmail.com" class="inline-link">sumamashaikh85@gmail.com</a>
+          </p>
+        </div>
+
+        <div class="footer__col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#screenshots">Screenshots</a></li>
+            <li>
+              <a
+                href="https://drive.usercontent.google.com/download?id=1VaOFeUMGprmBVEtPzB48pY2V1Ve6_q2g&export=download&confirm=t"
+                class="js-apk-link"
+              >
+                Download APK
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4>Legal &amp; Support</h4>
+          <ul>
+            <li><button type="button" class="js-open-legal" data-legal-tab="privacy">Privacy Policy</button></li>
+            <li><button type="button" class="js-open-legal" data-legal-tab="terms">Terms of Service</button></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="mailto:sumamashaikh85@gmail.com">sumamashaikh85@gmail.com</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4>Official Channels</h4>
+          <div class="social-links">
+            <a
+              href="https://whatsapp.com/channel/0029VbES0pq9mrGihT1hUR00"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              aria-label="Official WhatsApp Channel"
+              title="Join Official WhatsApp Channel"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <a
+              href="mailto:sumamashaikh85@gmail.com"
+              class="social-link"
+              aria-label="Email Sumama Shaikh Support"
+              title="Email Support"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M3 7l9 6 9-6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>&copy; <span id="currentYear"></span> Global Private Chatting • Developed by Sumama Shaikh.</p>
+        <p>
+          <a href="https://whatsapp.com/channel/0029VbES0pq9mrGihT1hUR00" target="_blank" rel="noopener noreferrer" class="inline-link">WhatsApp Channel</a>
+          •
+          <a href="mailto:sumamashaikh85@gmail.com" class="inline-link">sumamashaikh85@gmail.com</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Screenshot Lightbox Modal -->
+  <div
+    class="modal"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lightboxTitle"
+    hidden
+  >
+    <div class="modal__backdrop" data-close-modal="lightbox"></div>
+    <div class="modal__dialog">
+      <button type="button" class="modal__close" data-close-modal="lightbox" aria-label="Close preview">
+        &times;
+      </button>
+
+      <div class="lightbox__stage">
+        <button type="button" class="lightbox__nav" id="lightboxPrev" aria-label="Previous screenshot">
+          ‹
+        </button>
+
+        <div class="lightbox__phone-wrap">
+          <div class="phone-frame phone-frame--lightbox">
+            <div class="phone-frame__top"><div class="phone-frame__speaker"></div><div class="phone-frame__camera"></div></div>
+            <div class="phone-screen" id="lightboxScreenMount"></div>
+          </div>
+        </div>
+
+        <button type="button" class="lightbox__nav" id="lightboxNext" aria-label="Next screenshot">
+          ›
+        </button>
+      </div>
+
+      <div class="lightbox__caption">
+        <h3 id="lightboxTitle">Screen Title</h3>
+        <p id="lightboxDesc">Screen description</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Policy & Terms of Service Modal -->
+  <div
+    class="modal"
+    id="legalModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="legalModalTitle"
+    hidden
+  >
+    <div class="modal__backdrop" data-close-modal="legalModal"></div>
+    <div class="modal__dialog modal__dialog--legal">
+      <button type="button" class="modal__close" data-close-modal="legalModal" aria-label="Close legal information">
+        &times;
+      </button>
+
+      <span class="section-label">Legal Documentation</span>
+      <h2 class="legal-title" id="legalModalTitle">Privacy Policy &amp; Terms of Service</h2>
+      <p class="legal-updated">Last updated: November 2026 • Maintained by Sumama Shaikh</p>
+
+      <section class="legal-section" id="legalPrivacySection">
+        <h4>1. Privacy Policy Overview</h4>
+        <p>
+          This Privacy Policy explains how Global Private Chatting (developed by Sumama Shaikh) collects, uses, and handles information when you create an account and use the Android messaging application.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h4>2. Information You Provide</h4>
+        <p>When registering and using Global Private Chatting, you may provide:</p>
+        <ul>
+          <li>Account details such as your display name, email address, and password during signup.</li>
+          <li>Personal profile information displayed on your Profile screen.</li>
+          <li>Status updates, contacts interactions, and messages/emojis sent within your conversations so they can be delivered to your intended recipients.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h4>3. How We Use Information</h4>
+        <ul>
+          <li>Authenticating your account during login and maintaining your active session.</li>
+          <li>Displaying your Home chat list, Status updates, Contacts, and Profile accurately.</li>
+          <li>Delivering real-time messages between conversation participants.</li>
+          <li>Responding to support inquiries sent to our support email.</li>
+        </ul>
+        <p>We do not sell your personal information to third parties.</p>
+      </section>
+
+      <section class="legal-section" id="legalTermsSection">
+        <h4>4. Terms of Service</h4>
+        <p>
+          By downloading and using Global Private Chatting, you agree to use the application responsibly and in compliance with applicable laws. You are responsible for keeping your login credentials confidential and for activity occurring under your account. Abusive behavior, spam, or attempts to disrupt the service may result in account suspension.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h4>5. Contact Support</h4>
+        <p>
+          Questions regarding this policy, account requests, or technical support can be sent directly to Sumama Shaikh at
+          <a href="mailto:sumamashaikh85@gmail.com" class="inline-link">sumamashaikh85@gmail.com</a>.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Global Private Chatting — Single-File Professional Interactive Script
+     */
+    const APP_CONFIG = {
+      apkUrl: "https://drive.usercontent.google.com/download?id=1VaOFeUMGprmBVEtPzB48pY2V1Ve6_q2g&export=download&confirm=t",
+      versionLabel: "Version 1.0.0 • Direct Android APK",
+      whatsappChannel: "https://whatsapp.com/channel/0029VbES0pq9mrGihT1hUR00",
+      supportEmail: "sumamashaikh85@gmail.com"
+    };
+
+    const SCREEN_METADATA = [
+      {
+        title: "Home Section (Chats)",
+        description: "Browse your active conversations, unread indicators, and quick search right from the Home tab."
+      },
+      {
+        title: "Status Section",
+        description: "Share your status updates and view recent updates from your contacts cleanly."
+      },
+      {
+        title: "Contacts Section",
+        description: "Find contacts quickly, check availability, and open a conversation in one tap."
+      },
+      {
+        title: "Profile Section",
+        description: "Manage your personal display name, account details, and availability status."
+      },
+      {
+        title: "Individual Conversation Screen",
+        description: "Real-time one-on-one messaging with distinct chat bubbles and built-in emoji support."
+      },
+      {
+        title: "Login & Account Screen",
+        description: "Clean email and password sign-in with quick access to account registration."
+      }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // 1. Smooth page entrance choreography
+      window.requestAnimationFrame(() => {
+        document.body.classList.add("is-ready");
+      });
+
+      // 2. Dynamic copyright year
+      const yearEl = document.getElementById("currentYear");
+      if (yearEl) {
+        yearEl.textContent = String(new Date().getFullYear());
+      }
+
+      // 3. Stylish Download Notification Card + Progress Reset
+      const versionEl = document.getElementById("appVersionInfo");
+      if (versionEl) {
+        versionEl.textContent = APP_CONFIG.versionLabel;
+      }
+
+      const downloadToast = document.getElementById("downloadToast");
+      const downloadToastClose = document.getElementById("downloadToastClose");
+      let toastTimer = null;
+
+      const showDownloadToast = () => {
+        if (!downloadToast) return;
+        downloadToast.classList.remove("is-shown");
+        void downloadToast.offsetWidth; // restart progress bar animation cleanly
+        downloadToast.setAttribute("aria-hidden", "false");
+        downloadToast.classList.add("is-shown");
+
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => {
+          downloadToast.classList.remove("is-shown");
+          downloadToast.setAttribute("aria-hidden", "true");
+        }, 5000);
+      };
+
+      if (downloadToastClose && downloadToast) {
+        downloadToastClose.addEventListener("click", () => {
+          window.clearTimeout(toastTimer);
+          downloadToast.classList.remove("is-shown");
+          downloadToast.setAttribute("aria-hidden", "true");
+        });
+      }
+
+      document.querySelectorAll(".js-apk-link").forEach((link) => {
+        link.setAttribute("href", APP_CONFIG.apkUrl);
+        link.addEventListener("click", showDownloadToast);
+      });
+
+      // 4. Cursor-reactive mint sheen on Feature Cards (desktop/pointer devices)
+      if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
+        document.querySelectorAll(".feature-card").forEach((card) => {
+          card.addEventListener("mousemove", (event) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width) * 100;
+            const y = ((event.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty("--mx", `${x}%`);
+            card.style.setProperty("--my", `${y}%`);
+          });
+        });
+      }
+
+      // 5. Interactive Hero Phone Tab Switching (Home / Status / Contacts / Profile)
+      const heroTabs = document.querySelectorAll("[data-hero-tab]");
+      const heroViews = document.querySelectorAll("[data-hero-view]");
+
+      heroTabs.forEach((tabBtn) => {
+        tabBtn.addEventListener("click", () => {
+          const targetKey = tabBtn.getAttribute("data-hero-tab");
+
+          heroTabs.forEach((btn) => {
+            const isMatch = btn.getAttribute("data-hero-tab") === targetKey;
+            btn.classList.toggle("is-active", isMatch);
+            btn.setAttribute("aria-selected", String(isMatch));
+          });
+
+          heroViews.forEach((view) => {
+            const isMatch = view.getAttribute("data-hero-view") === targetKey;
+            view.hidden = !isMatch;
+            if (isMatch) {
+              view.classList.remove("is-entering");
+              void view.offsetWidth;
+              view.classList.add("is-entering");
+            }
+          });
+        });
+      });
+
+      // 6. Copy Support Email button
+      const copyEmailBtn = document.getElementById("copyEmailBtn");
+      const copyFeedback = document.getElementById("copyFeedback");
+      if (copyEmailBtn && copyFeedback) {
+        copyEmailBtn.addEventListener("click", async () => {
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(APP_CONFIG.supportEmail);
+            } else {
+              const tempInput = document.createElement("input");
+              tempInput.value = APP_CONFIG.supportEmail;
+              document.body.appendChild(tempInput);
+              tempInput.select();
+              document.execCommand("copy");
+              document.body.removeChild(tempInput);
+            }
+            copyFeedback.textContent = "Email copied!";
+            window.setTimeout(() => {
+              copyFeedback.textContent = "";
+            }, 2500);
+          } catch (err) {
+            copyFeedback.textContent = APP_CONFIG.supportEmail;
+          }
+        });
+      }
+
+      // 7. Scroll progress bar, sticky navbar state & active nav highlight
+      const scrollProgressBar = document.getElementById("scrollProgressBar");
+      const navbar = document.getElementById("navbar");
+      const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+      const sections = navLinks
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      const updateOnScroll = () => {
+        const scrollY = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollProgressBar && docHeight > 0) {
+          const pct = Math.min(100, Math.max(0, (scrollY / docHeight) * 100));
+          scrollProgressBar.style.width = `${pct}%`;
+        }
+
+        if (navbar) {
+          navbar.classList.toggle("is-scrolled", scrollY > 16);
+        }
+
+        const offset = scrollY + 135;
+        sections.forEach((section, index) => {
+          const top = section.offsetTop;
+          const bottom = top + section.offsetHeight;
+          if (offset >= top && offset < bottom) {
+            navLinks.forEach((l) => l.classList.remove("is-active"));
+            navLinks[index].classList.add("is-active");
+          }
+        });
+      };
+
+      window.addEventListener("scroll", updateOnScroll, { passive: true });
+      updateOnScroll();
+
+      // 8. Responsive mobile drawer
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      const closeMobileMenu = () => {
+        if (!menuToggle || !mobileMenu) return;
+        menuToggle.setAttribute("aria-expanded", "false");
+        mobileMenu.hidden = true;
+      };
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener("click", () => {
+          const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+          menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+          mobileMenu.hidden = isExpanded;
+        });
+
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", closeMobileMenu);
+        });
+
+        window.addEventListener("resize", () => {
+          if (window.innerWidth >= 960) closeMobileMenu();
+        });
+      }
+
+      // 9. Screenshots carousel buttons on mobile & tablet
+      const screenshotsTrack = document.getElementById("screenshotsTrack");
+      const carouselPrev = document.getElementById("carouselPrev");
+      const carouselNext = document.getElementById("carouselNext");
+
+      if (screenshotsTrack && carouselPrev && carouselNext) {
+        carouselPrev.addEventListener("click", () => {
+          screenshotsTrack.scrollBy({ left: -265, behavior: "smooth" });
+        });
+        carouselNext.addEventListener("click", () => {
+          screenshotsTrack.scrollBy({ left: 265, behavior: "smooth" });
+        });
+      }
+
+      // 10. Scroll-triggered reveals with IntersectionObserver
+      const revealItems = document.querySelectorAll(".reveal");
+      const staggerGroups = document.querySelectorAll(".features-grid, .screenshots-grid, .steps-grid");
+
+      if (!prefersReducedMotion && "IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-revealed");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -24px 0px" }
+        );
+        revealItems.forEach((el) => revealObserver.observe(el));
+
+        const staggerObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const children = entry.target.querySelectorAll(".reveal-stagger");
+                children.forEach((child, index) => {
+                  child.style.transitionDelay = `${index * 90}ms`;
+                  child.classList.add("is-revealed");
+                });
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08 }
+        );
+        staggerGroups.forEach((group) => staggerObserver.observe(group));
+      } else {
+        document.querySelectorAll(".reveal, .reveal-stagger").forEach((el) => {
+          el.classList.add("is-revealed");
+        });
+      }
+
+      // 11. Subtle hero parallax decorations
+      const parallaxNodes = document.querySelectorAll("[data-parallax]");
+      if (!prefersReducedMotion && parallaxNodes.length > 0) {
+        let ticking = false;
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                if (scrollY < 950) {
+                  parallaxNodes.forEach((node) => {
+                    const factor = parseFloat(node.getAttribute("data-parallax")) || 0;
+                    node.style.transform = `translate3d(0, ${scrollY * factor}px, 0)`;
+                  });
+                }
+                ticking = false;
+              });
+              ticking = true;
+            }
+          },
+          { passive: true }
+        );
+      }
+
+      // 12. Animated FAQ accordion
+      const faqItems = document.querySelectorAll(".faq-item");
+      faqItems.forEach((item) => {
+        const trigger = item.querySelector(".faq-trigger");
+        if (!trigger) return;
+
+        trigger.addEventListener("click", () => {
+          const willOpen = !item.classList.contains("is-open");
+
+          faqItems.forEach((other) => {
+            other.classList.remove("is-open");
+            const otherBtn = other.querySelector(".faq-trigger");
+            if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+          });
+
+          if (willOpen) {
+            item.classList.add("is-open");
+            trigger.setAttribute("aria-expanded", "true");
+          }
+        });
+      });
+
+      // 13. Shared Modal Helpers (Lightbox & Legal Modal)
+      let activeModal = null;
+      let lastFocusEl = null;
+
+      const openModal = (modalEl, triggerEl) => {
+        if (!modalEl) return;
+        lastFocusEl = triggerEl || document.activeElement;
+        activeModal = modalEl;
+        modalEl.hidden = false;
+        document.body.style.overflow = "hidden";
+        window.requestAnimationFrame(() => {
+          modalEl.classList.add("is-visible");
+        });
+        const closeBtn = modalEl.querySelector(".modal__close");
+        if (closeBtn) closeBtn.focus();
+      };
+
+      const closeModal = (modalEl) => {
+        if (!modalEl || modalEl.hidden) return;
+        modalEl.classList.remove("is-visible");
+        document.body.style.overflow = "";
+        activeModal = null;
+
+        window.setTimeout(() => {
+          modalEl.hidden = true;
+          if (lastFocusEl && typeof lastFocusEl.focus === "function") {
+            lastFocusEl.focus();
+          }
+        }, 220);
+      };
+
+      document.querySelectorAll("[data-close-modal]").forEach((el) => {
+        el.addEventListener("click", () => {
+          const targetId = el.getAttribute("data-close-modal");
+          closeModal(document.getElementById(targetId));
+        });
+      });
+
+      // 14. Screenshot Lightbox Gallery
+      const lightbox = document.getElementById("lightbox");
+      const lightboxScreenMount = document.getElementById("lightboxScreenMount");
+      const lightboxTitle = document.getElementById("lightboxTitle");
+      const lightboxDesc = document.getElementById("lightboxDesc");
+      const lightboxPrev = document.getElementById("lightboxPrev");
+      const lightboxNext = document.getElementById("lightboxNext");
+      let activeScreenIndex = 0;
+
+      const renderLightboxScreen = (index) => {
+        const total = SCREEN_METADATA.length;
+        activeScreenIndex = (index + total) % total;
+        const template = document.querySelector(`[data-screen-template="${activeScreenIndex}"]`);
+        const meta = SCREEN_METADATA[activeScreenIndex];
+
+        if (template && lightboxScreenMount) {
+          lightboxScreenMount.innerHTML = template.innerHTML;
+        }
+        if (lightboxTitle && lightboxDesc && meta) {
+          lightboxTitle.textContent = meta.title;
+          lightboxDesc.textContent = meta.description;
+        }
+      };
+
+      document.querySelectorAll(".screenshot-trigger").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.getAttribute("data-screen-index"), 10) || 0;
+          renderLightboxScreen(idx);
+          openModal(lightbox, btn);
+        });
+      });
+
+      if (lightboxPrev) {
+        lightboxPrev.addEventListener("click", () => renderLightboxScreen(activeScreenIndex - 1));
+      }
+      if (lightboxNext) {
+        lightboxNext.addEventListener("click", () => renderLightboxScreen(activeScreenIndex + 1));
+      }
+
+      // 15. Legal Modal (Privacy Policy & Terms of Service)
+      const legalModal = document.getElementById("legalModal");
+      document.querySelectorAll(".js-open-legal").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const tab = btn.getAttribute("data-legal-tab");
+          openModal(legalModal, btn);
+
+          if (tab === "terms") {
+            window.setTimeout(() => {
+              const termsEl = document.getElementById("legalTermsSection");
+              if (termsEl) termsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 120);
+          }
+        });
+      });
+
+      // Keyboard navigation for open modals
+      document.addEventListener("keydown", (event) => {
+        if (!activeModal) return;
+        if (event.key === "Escape") closeModal(activeModal);
+        if (activeModal === lightbox) {
+          if (event.key === "ArrowLeft") renderLightboxScreen(activeScreenIndex - 1);
+          if (event.key === "ArrowRight") renderLightboxScreen(activeScreenIndex + 1);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
